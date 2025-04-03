@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escucha Exclusiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #121212;
+            color: white;
+        }
+        #content {
+            display: none;
+            margin-top: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        audio {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Escucha Exclusiva</h1>
+    <p>Ingresa la contraseña para acceder al tema:</p>
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="checkPassword()">Ingresar</button>
+    
+    <div id="content">
+        <h2>Nightmare - Escucha exclusiva</h2>
+        <audio controls>
+            <source src="nightmare.mp3" type="audio/mpeg">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+    </div>
+    
+    <script>
+        function checkPassword() {
+            const password = document.getElementById("password").value;
+            const correctPassword = "prensa2025"; // Cambia esto por la clave que quieras
+            if (password === correctPassword) {
+                document.getElementById("content").style.display = "block";
+            } else {
+                alert("Contraseña incorrecta");
+            }
+        }
+    </script>
+</body>
+</html>
