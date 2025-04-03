@@ -12,6 +12,9 @@
             background-color: #121212;
             color: white;
         }
+        #auth {
+            margin-bottom: 20px;
+        }
         #content {
             display: none;
             margin-top: 20px;
@@ -20,6 +23,13 @@
             padding: 10px;
             font-size: 16px;
         }
+        .audio-container {
+            background: url('fondo.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
         audio {
             margin-top: 20px;
         }
@@ -27,13 +37,17 @@
 </head>
 <body>
     <h1>Escucha Exclusiva</h1>
-    <p>Ingresa la contraseña para acceder al tema:</p>
-    <input type="password" id="password" placeholder="Contraseña">
-    <button onclick="checkPassword()">Ingresar</button>
+    <div id="auth">
+        <p>Ingresa la contraseña para acceder al tema:</p>
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="checkPassword()">Ingresar</button>
+    </div>
     
     <div id="content">
         <h2>Nightmare - Escucha exclusiva</h2>
-        <audio id="player" controls controlsList="nodownload"></audio>
+        <div class="audio-container">
+            <audio id="player" controls controlsList="nodownload"></audio>
+        </div>
     </div>
     
     <script>
@@ -47,6 +61,7 @@
             let data = await response.json();
             
             if (password === data.password) {
+                document.getElementById("auth").style.display = "none"; // Oculta la sección de autenticación
                 document.getElementById("content").style.display = "block";
                 let audio = document.getElementById("player");
                 let source = document.createElement("source");
