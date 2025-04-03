@@ -33,18 +33,24 @@
     
     <div id="content">
         <h2>Nightmare - Escucha exclusiva</h2>
-        <audio controls>
-            <source src="nightmare.mp3" type="audio/mpeg">
-            Tu navegador no soporta el elemento de audio.
-        </audio>
+        <audio id="player" controls controlsList="nodownload"></audio>
     </div>
     
     <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        });
+
         function checkPassword() {
             const password = document.getElementById("password").value;
             const correctPassword = "prensa2025"; // Cambia esto por la clave que quieras
             if (password === correctPassword) {
                 document.getElementById("content").style.display = "block";
+                let audio = document.getElementById("player");
+                let source = document.createElement("source");
+                source.src = "nightmare.mp3"; // Se carga solo después de ingresar la contraseña
+                source.type = "audio/mpeg";
+                audio.appendChild(source);
             } else {
                 alert("Contraseña incorrecta");
             }
