@@ -13,7 +13,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             color: white;
-            background-color: black;
+            background-color: black; /* Fondo negro por defecto */
             margin: 0;
             height: 100vh;
             display: flex;
@@ -27,10 +27,10 @@
         #auth img {
             max-width: 300px;
             display: block;
-            margin: 0 auto 5px auto;
+            margin: 0 auto 0 auto;
         }
         #auth p {
-            margin-top: -30px; /* Ajuste para acercar más el texto a la imagen */
+            margin-top: -10px;
         }
         #content {
             display: none;
@@ -48,7 +48,6 @@
             background: transparent;
             filter: invert(1);
             max-width: 250px;
-            margin-top: 20px; /* Ajuste para bajar el reproductor */
         }
         .background {
             background: url('fondo.jpg') no-repeat center center fixed;
@@ -66,11 +65,7 @@
         <button onclick="checkPassword()">Ingresar</button>
     </div>
     
-    <div id="content">
-        <audio id="player" controls controlsList="nodownload">
-            <source src="NIGHTMARE.mp3" type="audio/mpeg">
-        </audio>
-    </div>
+    <div id="content"></div>
     
     <script>
         document.addEventListener("contextmenu", function (e) {
@@ -83,9 +78,21 @@
             let data = await response.json();
             
             if (password === data.password) {
-                document.getElementById("auth").style.display = "none";
+                document.getElementById("auth").style.display = "none"; // Oculta la sección de autenticación
                 document.getElementById("content").style.display = "flex";
-                document.getElementById("body").classList.add("background");
+                document.getElementById("body").classList.add("background"); // Agrega fondo después de autenticación
+                
+                let audio = document.createElement("audio");
+                audio.id = "player";
+                audio.controls = true;
+                audio.controlsList = "nodownload";
+                
+                let source = document.createElement("source");
+                source.src = "NIGHTMARE.mp3";
+                source.type = "audio/mpeg";
+                
+                audio.appendChild(source);
+                document.getElementById("content").appendChild(audio);
             } else {
                 alert("Contraseña incorrecta");
             }
