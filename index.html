@@ -13,7 +13,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             color: white;
-            background-color: black; /* Fondo negro por defecto */
+            background-color: black;
             margin: 0;
             height: 100vh;
             display: flex;
@@ -30,7 +30,7 @@
             margin: 0 auto 5px auto;
         }
         #auth p {
-            margin-top: -20px;
+            margin-top: -30px; /* Ajuste para acercar más el texto a la imagen */
         }
         #content {
             display: none;
@@ -48,6 +48,7 @@
             background: transparent;
             filter: invert(1);
             max-width: 250px;
+            margin-top: 20px; /* Ajuste para bajar el reproductor */
         }
         .background {
             background: url('fondo.jpg') no-repeat center center fixed;
@@ -66,7 +67,9 @@
     </div>
     
     <div id="content">
-        <audio id="player" controls controlsList="nodownload"></audio>
+        <audio id="player" controls controlsList="nodownload">
+            <source src="NIGHTMARE.mp3" type="audio/mpeg">
+        </audio>
     </div>
     
     <script>
@@ -80,14 +83,9 @@
             let data = await response.json();
             
             if (password === data.password) {
-                document.getElementById("auth").style.display = "none"; // Oculta la sección de autenticación
+                document.getElementById("auth").style.display = "none";
                 document.getElementById("content").style.display = "flex";
-                document.getElementById("body").classList.add("background"); // Agrega fondo después de autenticación
-                
-                let audio = document.getElementById("player");
-                if (!audio.src) { 
-                    audio.src = "NIGHTMARE.mp3";
-                }
+                document.getElementById("body").classList.add("background");
             } else {
                 alert("Contraseña incorrecta");
             }
