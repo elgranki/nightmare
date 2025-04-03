@@ -10,6 +10,7 @@
             text-align: center;
             padding: 50px;
             color: white;
+            background-color: black; /* Fondo negro por defecto */
         }
         #auth {
             margin-bottom: 20px;
@@ -58,11 +59,6 @@
                 document.getElementById("auth").style.display = "none"; // Oculta la sección de autenticación
                 document.getElementById("content").style.display = "block";
                 document.getElementById("body").classList.add("background"); // Agrega fondo después de autenticación
-                let audio = document.getElementById("player");
-                let source = document.createElement("source");
-                source.src = "nightmare.mp3"; // Se carga solo después de ingresar la contraseña
-                source.type = "audio/mpeg";
-                audio.appendChild(source);
             } else {
                 alert("Contraseña incorrecta");
             }
