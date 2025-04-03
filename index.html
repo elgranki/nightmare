@@ -15,6 +15,10 @@
         #auth {
             margin-bottom: 20px;
         }
+        #auth img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
         #content {
             display: none;
             margin-top: 20px;
@@ -28,14 +32,14 @@
         }
         .background {
             background: url('fondo.jpg') no-repeat center center fixed;
-            background-size: contain;
-            background-color: black;
+            background-size: cover;
         }
     </style>
 </head>
 <body id="body">
     <h1>Escucha Exclusiva</h1>
     <div id="auth">
+        <img src="logo_login.png" alt="Logo">
         <p>Ingresa la contraseña para acceder al tema:</p>
         <input type="password" id="password" placeholder="Contraseña">
         <button onclick="checkPassword()">Ingresar</button>
