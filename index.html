@@ -97,18 +97,29 @@
         let API_URL = "";
 
         async function loadConfig() {
-            let response = await fetch("config.json");
-            let data = await response.json();
-            API_URL = data.api_url;
-            registrarEvento("Acceso");
+            try {
+                let response = await fetch("config.json");
+                let data = await response.json();
+                API_URL = data.api_url;
+                console.log("API_URL cargado:", API_URL);
+                registrarEvento("Acceso");
+            } catch (error) {
+                console.error("Error cargando config.json:", error);
+            }
         }
 
         function registrarEvento(tipo) {
             if (API_URL) {
                 let timestamp = new Date().toISOString();
-                fetch(`${API_URL}?tipo=${tipo}&fecha=${encodeURIComponent(timestamp)}`, { method: "GET" })
-                    .then(response => console.log("Evento registrado:", tipo, "Fecha:", timestamp))
+                let url = `${API_URL}?tipo=${tipo}&fecha=${encodeURIComponent(timestamp)}`;
+                console.log("Registrando evento:", tipo, "Fecha:", timestamp, "URL:", url);
+                
+                fetch(url, { method: "GET" })
+                    .then(response => response.text())
+                    .then(data => console.log("Respuesta API:", data))
                     .catch(error => console.error("Error al registrar evento:", error));
+            } else {
+                console.warn("API_URL no está definido, no se puede registrar evento");
             }
         }
 
@@ -117,29 +128,33 @@
         });
 
         async function checkPassword() {
-            const password = document.getElementById("password").value;
-            let response = await fetch("config.json");
-            let data = await response.json();
-            
-            if (password === data.password) {
-                registrarEvento("Login Correcto");
-                document.getElementById("auth").style.display = "none";
-                document.getElementById("content").style.display = "flex";
-                document.getElementById("body").classList.add("background");
+            try {
+                const password = document.getElementById("password").value;
+                let response = await fetch("config.json");
+                let data = await response.json();
                 
-                let audio = document.createElement("audio");
-                audio.id = "player";
-                audio.controls = true;
-                audio.controlsList = "nodownload";
-                
-                let source = document.createElement("source");
-                source.src = "NIGHTMARE.mp3";
-                source.type = "audio/mpeg";
-                
-                audio.appendChild(source);
-                document.getElementById("content").appendChild(audio);
-            } else {
-                alert("Contraseña incorrecta");
+                if (password === data.password) {
+                    registrarEvento("Login Correcto");
+                    document.getElementById("auth").style.display = "none";
+                    document.getElementById("content").style.display = "flex";
+                    document.getElementById("body").classList.add("background");
+                    
+                    let audio = document.createElement("audio");
+                    audio.id = "player";
+                    audio.controls = true;
+                    audio.controlsList = "nodownload";
+                    
+                    let source = document.createElement("source");
+                    source.src = "NIGHTMARE.mp3";
+                    source.type = "audio/mpeg";
+                    
+                    audio.appendChild(source);
+                    document.getElementById("content").appendChild(audio);
+                } else {
+                    alert("Contraseña incorrecta");
+                }
+            } catch (error) {
+                console.error("Error verificando la contraseña:", error);
             }
         }
     </script>
