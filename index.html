@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escucha Exclusiva</title>
+    <title>Nightmare</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,6 +59,11 @@
                 document.getElementById("auth").style.display = "none"; // Oculta la sección de autenticación
                 document.getElementById("content").style.display = "block";
                 document.getElementById("body").classList.add("background"); // Agrega fondo después de autenticación
+                let audio = document.getElementById("player");
+                let source = document.createElement("source");
+                source.src = "NIGHTMARE.mp3"; // Se carga solo después de ingresar la contraseña
+                source.type = "audio/mpeg";
+                audio.appendChild(source);
             } else {
                 alert("Contraseña incorrecta");
             }
