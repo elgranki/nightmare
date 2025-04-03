@@ -84,17 +84,10 @@
                 document.getElementById("content").style.display = "flex";
                 document.getElementById("body").classList.add("background"); // Agrega fondo después de autenticación
                 
-                let audio = document.createElement("audio");
-                audio.id = "player";
-                audio.controls = true;
-                audio.controlsList = "nodownload";
-                
-                let source = document.createElement("source");
-                source.src = "NIGHTMARE.mp3";
-                source.type = "audio/mpeg";
-                
-                audio.appendChild(source);
-                document.getElementById("content").appendChild(audio);
+                let audio = document.getElementById("player");
+                if (!audio.src) { 
+                    audio.src = "NIGHTMARE.mp3";
+                }
             } else {
                 alert("Contraseña incorrecta");
             }
