@@ -13,29 +13,32 @@
             font-family: Arial, sans-serif;
             text-align: center;
             color: white;
-            background-color: black; /* Fondo negro por defecto */
+            background-color: black;
             margin: 0;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
         #auth {
             font-family: 'VoskaRound', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         #auth img {
             max-width: 300px;
-            display: block;
-            margin: 0 auto 0 auto;
+            margin-bottom: 20px;
         }
         #auth p {
-            margin-top: -10px;
+            margin: 5px 0;
         }
         #content {
             display: none;
             width: 100%;
             height: 100vh;
+            display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -43,6 +46,7 @@
         input, button {
             padding: 10px;
             font-size: 16px;
+            margin-top: 5px;
         }
         audio {
             background: transparent;
@@ -78,9 +82,9 @@
             let data = await response.json();
             
             if (password === data.password) {
-                document.getElementById("auth").style.display = "none"; // Oculta la sección de autenticación
+                document.getElementById("auth").style.display = "none";
                 document.getElementById("content").style.display = "flex";
-                document.getElementById("body").classList.add("background"); // Agrega fondo después de autenticación
+                document.getElementById("body").classList.add("background");
                 
                 let audio = document.createElement("audio");
                 audio.id = "player";
