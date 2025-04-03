@@ -95,12 +95,14 @@
     
     <script>
         let API_URL = "";
+        let PASSWORD = "";
 
         async function loadConfig() {
             try {
                 let response = await fetch("config.json");
                 let data = await response.json();
                 API_URL = data.api_url;
+                PASSWORD = data.password;
                 console.log("API_URL cargado:", API_URL);
                 registrarEvento("Acceso");
             } catch (error) {
@@ -111,13 +113,18 @@
         function registrarEvento(tipo) {
             if (API_URL) {
                 let timestamp = new Date().toISOString();
-                let url = `${API_URL}?tipo=${tipo}&fecha=${encodeURIComponent(timestamp)}`;
-                console.log("Registrando evento:", tipo, "Fecha:", timestamp, "URL:", url);
+                let data = { tipo: tipo, fecha: timestamp };
                 
-                fetch(url, { method: "GET" })
-                    .then(response => response.text())
-                    .then(data => console.log("Respuesta API:", data))
-                    .catch(error => console.error("Error al registrar evento:", error));
+                console.log("Registrando evento:", data);
+
+                fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => console.log("Respuesta API:", data))
+                .catch(error => console.error("Error al registrar evento:", error));
             } else {
                 console.warn("API_URL no está definido, no se puede registrar evento");
             }
@@ -127,34 +134,29 @@
             loadConfig();
         });
 
-        async function checkPassword() {
-            try {
-                const password = document.getElementById("password").value;
-                let response = await fetch("config.json");
-                let data = await response.json();
+        function checkPassword() {
+            const password = document.getElementById("password").value;
+            
+            if (password === PASSWORD) {
+                registrarEvento("Login Correcto");
+                document.getElementById("auth").style.display = "none";
+                document.getElementById("content").style.display = "flex";
+                document.getElementById("body").classList.add("background");
                 
-                if (password === data.password) {
-                    registrarEvento("Login Correcto");
-                    document.getElementById("auth").style.display = "none";
-                    document.getElementById("content").style.display = "flex";
-                    document.getElementById("body").classList.add("background");
-                    
-                    let audio = document.createElement("audio");
-                    audio.id = "player";
-                    audio.controls = true;
-                    audio.controlsList = "nodownload";
-                    
-                    let source = document.createElement("source");
-                    source.src = "NIGHTMARE.mp3";
-                    source.type = "audio/mpeg";
-                    
-                    audio.appendChild(source);
-                    document.getElementById("content").appendChild(audio);
-                } else {
-                    alert("Contraseña incorrecta");
-                }
-            } catch (error) {
-                console.error("Error verificando la contraseña:", error);
+                let audio = document.createElement("audio");
+                audio.id = "player";
+                audio.controls = true;
+                audio.controlsList = "nodownload";
+                
+                let source = document.createElement("source");
+                source.src = "NIGHTMARE.mp3";
+                source.type = "audio/mpeg";
+                
+                audio.appendChild(source);
+                document.getElementById("content").appendChild(audio);
+            } else {
+                alert("Contraseña incorrecta");
+                registrarEvento("Login Fallido");
             }
         }
     </script>
