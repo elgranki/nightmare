@@ -41,10 +41,12 @@
             e.preventDefault();
         });
 
-        function checkPassword() {
+        async function checkPassword() {
             const password = document.getElementById("password").value;
-            const correctPassword = "prensa2025"; // Cambia esto por la clave que quieras
-            if (password === correctPassword) {
+            let response = await fetch("config.json");
+            let data = await response.json();
+            
+            if (password === data.password) {
                 document.getElementById("content").style.display = "block";
                 let audio = document.getElementById("player");
                 let source = document.createElement("source");
